@@ -1,6 +1,6 @@
 package com.detail.app.mydetail;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 import org.junit.Test;
 
 
@@ -9,7 +9,7 @@ public class SurgeryTest {
 	@Test
 	public void testIsAutomaticallyAssignPositiveId() {
 		Surgery surgery = new Surgery("Paziente1");
-		assertTrue("Id should be positive",surgery.getId()>0);
+		assertThat(surgery.getId()).isPositive();
 	}
 	
 	@Test
@@ -17,14 +17,14 @@ public class SurgeryTest {
 		Surgery surgery1 = new Surgery("Paziente1");
 		Surgery surgery2 = new Surgery("Paziente2");
 
-		assertTrue("Id are incremental", surgery1.getId()<surgery2.getId());
+		assertThat(surgery2.getId()).isGreaterThan(surgery1.getId());
 	}
 	
 	@Test
 	public void testNameIsCorrectlyAssign() {
 		Surgery surgery1 = new Surgery("Paziente1");
 
-		assertEquals("Paziente1",surgery1.getPatientName());
+		assertThat(surgery1.getPatientName()).isEqualTo("Paziente1");
 	}
 	
 	@Test
@@ -32,14 +32,17 @@ public class SurgeryTest {
 		Surgery surgery = new Surgery("Paziente1");
 		surgery.pressButton(3);
 
-		assertEquals(9,surgery.getJouleUsed());
+		assertThat(surgery.getJouleUsed()).isEqualTo(9);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void testIfSecondsNegativeShouldThrow() {
 		
 		Surgery surgery = new Surgery("Paziente1");
-		surgery.pressButton(-3);
+		assertThatThrownBy(()->
+		surgery.pressButton(-3))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("Negative seconds passed: -3");
 	}
 	
 
