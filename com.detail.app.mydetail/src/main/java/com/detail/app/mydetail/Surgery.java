@@ -1,4 +1,6 @@
 package com.detail.app.mydetail;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Surgery
@@ -21,6 +23,7 @@ public class Surgery
 	
 	*/
 	
+	private static final Logger LOGGER = LogManager.getLogger(Surgery.class);
 	
 	public Surgery(String patient) {
 		this.id = ++lastId;
@@ -36,10 +39,14 @@ public class Surgery
 		return jouleUsed;
 	}
 	public void pressButton(int secondsPressed) {
+		LOGGER.info("Seconds pressed: " + secondsPressed);
 		if (secondsPressed < 0) {
 			throw new IllegalArgumentException("Negative seconds passed: " + secondsPressed);
 		}
 		jouleUsed = jouleUsed + (secondsPressed * 3);
+		LOGGER.info("Joule used: " + jouleUsed);
+		if (LOGGER.isDebugEnabled())
+		LOGGER.debug(String.format("Success: seconds of pressing(%d), joule used (%d)", secondsPressed, jouleUsed));
 	}
 	
 }
