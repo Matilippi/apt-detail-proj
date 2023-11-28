@@ -37,6 +37,12 @@ public class SurgeryTest {
 
 		assertThat(surgery1.getJouleUsed()).isEqualTo(9);
 	}
+	@Test
+	public void testJouleIsCorrectlyCalculatedwithZero() {
+		surgery1.pressButton(0);
+
+		assertThat(surgery1.getJouleUsed()).isEqualTo(0);
+	}
 	
 	@Test
 	public void testIfSecondsNegativeShouldThrow() {
