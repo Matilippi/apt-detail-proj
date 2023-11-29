@@ -45,7 +45,7 @@ public class Surgery
 		}
 		jouleUsed = jouleUsed + (secondsPressed * 3);
 		LOGGER.info("Joule used: " + jouleUsed);
-		if (LOGGER.isDebugEnabled())
+		//if (LOGGER.isDebugEnabled())
 		LOGGER.debug(String.format("Success: seconds of pressing(%d), joule used (%d)", secondsPressed, jouleUsed));
 	}
 	
