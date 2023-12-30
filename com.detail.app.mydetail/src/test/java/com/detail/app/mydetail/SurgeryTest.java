@@ -26,6 +26,12 @@ public class SurgeryTest {
 		surgery2 = new Surgery(surgeriesRepository, surgeryService, "Paziente2");
 	}
 	@Test 
+	public void testSpiedListOfSurgeries() {
+		List<Surgery> surgeries = spy(new ArrayList<>());
+		doReturn(surgery1).when(surgeries).get(0);
+		assertThat(surgeries.get(0)).isEqualTo(surgery1);
+	}
+	@Test 
 	public void testNUmberOfSurgeries() {
 		List<Surgery> surgeries = new ArrayList<>();
 		surgeries.add(surgery1);
