@@ -8,7 +8,7 @@ on:
    pull_request:
     - master
  
- jobs:
+jobs:
    build:
      runs-on: ubuntu-latest
  
