@@ -39,7 +39,7 @@ jobs:
        run: > 
           mvn -f com.detail.app.mydetail/pom.xml 
           clean verify
-          surefire-report:report-only site:site - DgenerateReports=false
+          surefire-report:report-only site:site -DgenerateReports=false
      - name: Archive JUnit Report
        uses: actions/upload-artifact@v2
        with: 
