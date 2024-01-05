@@ -12,7 +12,7 @@ jobs:
    build:
      runs-on: ${{ matrix.os }}
      env: 
-        workdir: com.detail.app.mydetail/pom.xml
+        workdir: com.detail.app.mydetail
      strategy:
         matrix:
            os: [ubuntu-latest, macos-latest]
@@ -37,9 +37,9 @@ jobs:
      - name: Build with Maven
        run: > 
           mvn clean verify ${{matrix.additional-maven-args}}
-       working-directory: ${{ env.workdir }}
        env: 
           COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_TOKEN}}
+       working-directory: ${{ env.workdir }}
      - name: Archive JUnit Report
        uses: actions/upload-artifact@v2
        if: ${{ always() }}
