@@ -15,7 +15,7 @@ jobs:
         workdir: com.detail.app.mydetail
      strategy:
         matrix:
-           os: [ubuntu-latest, macos-latest]
+           os: [ubuntu-latest, macos-latest, windows-latest]
            include:
            - java: 8
              additional-maven-args: "-Pcoveralls -DrepoToken=$COVERALLS_REPO_TOKEN"
