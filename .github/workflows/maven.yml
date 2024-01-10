@@ -1,5 +1,5 @@
 # This workflow will build a Java project with Maven
-name: Java CI with Maven in Linux
+name: Java CI with Maven and Docker in Linux
   
 on:
  push:
@@ -39,6 +39,10 @@ jobs:
           mvn clean verify ${{matrix.additional-maven-args}}
        env: 
           COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_TOKEN}}
+       working-directory: ${{ env.workdir }}
+     - name: Verify Docker
+       run: > 
+          mvn verify -Pdocker
        working-directory: ${{ env.workdir }}
      - name: Archive JUnit Report
        uses: actions/upload-artifact@v2
