@@ -40,6 +40,8 @@ jobs:
        env: 
           COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_TOKEN}}
        working-directory: ${{ env.workdir }}
+     - name: Install Docker
+       uses: docker-practice/actions-setup-docker@master 
      - name: Verify Docker
        run: > 
           mvn verify -Pdocker

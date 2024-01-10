@@ -183,9 +183,7 @@
 			   <plugin>
 				   <groupId>io.fabric8</groupId>
 				   <artifactId>docker-maven-plugin</artifactId>
-				   <version>0.40.2</version>
 				   <configuration>
-					   <showLogs>true</showLogs>
 					   <images>
 						   <image>
 							   <name>java-detail-java</name>
@@ -197,8 +195,7 @@
 							   </build>
 							   <run>
 								   <wait>
-									   <log>Hello world! test for docker</log>
-									   <time>1000</time>
+									   <exit>0</exit>
 								   </wait>
 							   </run>
 						   </image>
