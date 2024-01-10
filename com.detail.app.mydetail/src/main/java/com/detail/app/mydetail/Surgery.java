@@ -27,6 +27,10 @@ public class Surgery
 	
 	*/
 	
+	public static void main(String[] args) {
+		System.out.print(args);
+	}
+	
 	private static final Logger LOGGER = LogManager.getLogger(Surgery.class);
 	
 	public Surgery(SurgeriesRepository surgeriesRepository,SurgeryService surgeryService, String patient) {
@@ -35,6 +39,7 @@ public class Surgery
 		this.surgeriesRepository = surgeriesRepository;
 		this.surgeryService = surgeryService;
 	}
+	
 	public void setSurgeryJoule(int joule) {
 		List<Surgery> surgeries = surgeriesRepository.findAll();
 		if(!surgeries.isEmpty()) {

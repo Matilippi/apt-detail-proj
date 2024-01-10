@@ -51,6 +51,11 @@ public class SurgeryTest {
 		surgery1.pressButton(3);
 		verify(surgeryService).setJouleUsed(surgery1.getId(), 9);
 	}
+	
+	@Test
+	public void testIsNameAssignedCorrectly() {
+		assertThat(surgery1.getPatientName()).isEqualTo("Paziente1");
+	}
 
 	@Test
 	public void testIsAutomaticallyAssignPositiveId() {
@@ -60,11 +65,6 @@ public class SurgeryTest {
 	@Test
 	public void testIdAreIncremental() {
 		assertThat(surgery2.getId()).isGreaterThan(surgery1.getId());
-	}
-	
-	@Test
-	public void testNameIsCorrectlyAssign() {
-		assertThat(surgery1.getPatientName()).isEqualTo("Paziente1");
 	}
 	
 	@Test
