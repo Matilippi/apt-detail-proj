@@ -15,7 +15,7 @@ jobs:
         workdir: com.detail.app.mydetail
      strategy:
         matrix:
-           os: [ubuntu-latest, macos-latest]
+           os: [ubuntu-latest]
            include:
            - java: 8
              additional-maven-args: "-Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report"
@@ -39,7 +39,9 @@ jobs:
           mvn clean verify ${{matrix.additional-maven-args}}
        env: 
           COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_TOKEN}}
-       working-directory: ${{ env.workdir }} 
+       working-directory: ${{ env.workdir }}
+     - name: Install Docker
+       uses: docker-practice/actions-setup-docker@master 
      - name: Verify Docker
        run: > 
           mvn verify -Pdocker
