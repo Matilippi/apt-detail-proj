@@ -2,7 +2,6 @@ package com.detail.app.mydetail.repository.mongo;
 
 
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -21,7 +20,7 @@ public class SurgeryMongoRepository implements SurgeriesRepository{
 	private MongoCollection<Document> surgeryCollection;
 	
 	public SurgeryMongoRepository(MongoClient client) {
-		surgeryCollection = client.getDatabase(SURGERY_COLLECTION_NAME).getCollection(SURGERY_COLLECTION_NAME);
+		surgeryCollection = client.getDatabase(SURGERY_DB_NAME).getCollection(SURGERY_COLLECTION_NAME);
 	}
 
 	@Override
@@ -31,8 +30,8 @@ public class SurgeryMongoRepository implements SurgeriesRepository{
 	           .map(this::fromDocumentToSurgery)
 	           .collect(Collectors.toList());
 	}
-	private Surgery fromDocumentToSurgery(Document doc) {
-		return new Surgery(""+doc.get("id"), ""+doc.get("patientName"));
+	private Surgery fromDocumentToSurgery(Document d) {
+		return new Surgery(""+ d.get("id"), ""+ d.get("patientName"));
 	}
 	@Override
 	public Surgery findById(String id) {

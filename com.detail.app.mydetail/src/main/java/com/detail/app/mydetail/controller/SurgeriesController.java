@@ -26,11 +26,11 @@ public class SurgeriesController {
 	public void deleteSurgery(Surgery surgery) {
 		Surgery existingSurgery = surgeriesRepository.findById(surgery.getId());
 		if (existingSurgery == null) {
-			surgeryView.showError("No existing surgery " + surgery.getId(), existingSurgery);
+			surgeryView.showError("No existing surgery " + surgery.getId(), surgery);
 			return;
-		} else {
+		} 
 			surgeriesRepository.delete(surgery.getId());
 			surgeryView.surgeryRemoved(surgery);
-		}	
+			
 	}
 }

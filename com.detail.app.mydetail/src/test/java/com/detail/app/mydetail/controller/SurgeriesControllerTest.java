@@ -1,6 +1,5 @@
 package com.detail.app.mydetail.controller;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.ignoreStubs;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -8,9 +7,7 @@ import static org.mockito.Mockito.when;
 import static java.util.Arrays.asList;
 
 
-import java.util.ArrayList;
 import java.util.List;
-import static java.util.Collections.emptyList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -83,7 +80,7 @@ public class SurgeriesControllerTest{
 			thenReturn(null);
 		surgeriesController.deleteSurgery(surgery1);
 		verify(surgeryView)
-			.showError("No existing surgery with id 1", surgery1);
+			.showError("No existing surgery 1", surgery1);
 		verifyNoMoreInteractions(ignoreStubs(surgeriesRepository));
 	}
 

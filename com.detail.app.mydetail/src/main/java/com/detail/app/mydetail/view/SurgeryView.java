@@ -6,7 +6,7 @@ import com.detail.app.mydetail.model.Surgery;
 
 public interface SurgeryView {
 
-	void showAllSurgeries(List<Surgery> students);
+	void showAllSurgeries(List<Surgery> surgeries);
 
 	void showError(String message, Surgery surgery);
 

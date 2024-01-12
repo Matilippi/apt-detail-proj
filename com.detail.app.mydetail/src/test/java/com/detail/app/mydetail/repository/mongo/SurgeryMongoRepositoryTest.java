@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.assertj.core.api.Assert;
 import org.bson.Document;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -36,12 +37,12 @@ public class SurgeryMongoRepositoryTest {
 	private List<Surgery> readAllSurgeriesFromDatabase(){
 		return StreamSupport.
 				stream(surgeryCollection.find().spliterator(),false)
-				.map(d -> new Surgery(""+d.get("id"), ""+d.get("patientName")))
+				.map(d -> new Surgery("" + d.get("id"), "" + d.get("patientName")))
 				.collect(Collectors.toList());
 	}
 	
-	private void addTestSurgeryToDatabase(int id, String patientName) {
-		surgeryCollection.insertOne(new Document().append("id", "1").append("paziente", patientName));
+	private void addTestSurgeryToDatabase(String id, String patientName) {
+		surgeryCollection.insertOne(new Document().append("id", id).append("patientName", patientName));
 	}
 	
 	@BeforeClass
@@ -72,8 +73,8 @@ public class SurgeryMongoRepositoryTest {
 	}
 	@Test
 	public void testFindAllWhenDatabaseIsNotEmpty() {
-		addTestSurgeryToDatabase(1, "Paziente1");
-		addTestSurgeryToDatabase(2, "Paziente2");
+		addTestSurgeryToDatabase("1", "Paziente1");
+		addTestSurgeryToDatabase("2", "Paziente2");
 		assertThat(surgeriesRepository.findAll())
 			.containsExactly(
 					new Surgery("1","Paziente1"),
@@ -86,9 +87,9 @@ public class SurgeryMongoRepositoryTest {
 	}
 	@Test
 	public void testFindByIdFound() {
-		addTestSurgeryToDatabase(1, "Paziente1");
-		addTestSurgeryToDatabase(2, "Paziente2");
-		assertThat(surgeriesRepository.findById("1")).isEqualTo(new Surgery("1", "Paziente1"));
+		addTestSurgeryToDatabase("1", "Paziente1");
+		addTestSurgeryToDatabase("2", "Paziente2");
+		assertThat(surgeriesRepository.findById("2")).isEqualTo(new Surgery("2", "Paziente2"));
 	}
 	
 	@Test
@@ -100,7 +101,7 @@ public class SurgeryMongoRepositoryTest {
 	
 	@Test
 	public void testDelete() {
-		addTestSurgeryToDatabase(1, "Paziente1");
+		addTestSurgeryToDatabase("1", "Paziente1");
 		surgeriesRepository.delete("1");
 		assertThat(readAllSurgeriesFromDatabase()).isEmpty();
 	}

@@ -1,28 +1,18 @@
-package com.detail.app.mydetail;
+package com.detail.app.mydetail.model;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import static java.util.Collections.emptyList;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import com.detail.app.mydetail.model.Surgery;
-import com.detail.app.mydetail.repository.SurgeriesRepository;
 
 
 
 public class SurgeryTest {
 	private Surgery surgery1;
-	private Surgery surgery2;
 	
 	@Before
 	public void setup() {
 		surgery1 = new Surgery("1", "Paziente1");
-		surgery2 = new Surgery("2", "Paziente2");
 	}
 	
 	@Test
@@ -63,3 +53,4 @@ public class SurgeryTest {
 	
 
 }
+

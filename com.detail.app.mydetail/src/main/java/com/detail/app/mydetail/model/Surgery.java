@@ -1,11 +1,9 @@
 package com.detail.app.mydetail.model;
-import java.util.List;
+
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.detail.app.mydetail.SurgeryService;
-import com.detail.app.mydetail.repository.SurgeriesRepository;
 
 /**
  * Surgery
@@ -33,8 +31,8 @@ public class Surgery
 	
 	private static final Logger LOGGER = LogManager.getLogger(Surgery.class);
 	
-	public Surgery(String string, String patientName) {
-		this.id = string;
+	public Surgery(String id, String patientName) {
+		this.id = id;
 		this.patientName = patientName;
 	}
 	
@@ -58,5 +56,28 @@ public class Surgery
 		//if (LOGGER.isDebugEnabled())
 		LOGGER.debug(String.format("Success: seconds of pressing(%d), joule used (%d)", secondsPressed, jouleUsed));
 	}
-	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, patientName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Surgery other = (Surgery) obj;
+		return Objects.equals(id, other.id) && Objects.equals(patientName, other.patientName);
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + patientName + "]";
+	}
 }
