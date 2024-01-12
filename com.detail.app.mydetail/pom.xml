@@ -265,8 +265,7 @@
 							   </external>
 							   <run>
 								   <wait>
-									   <log>Hello World!</log>
-									   <time>10000</time>
+									   <exit>0</exit>
 								   </wait>
 							   </run>
 						   </image>
