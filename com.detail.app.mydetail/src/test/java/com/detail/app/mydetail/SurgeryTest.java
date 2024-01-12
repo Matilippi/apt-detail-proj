@@ -1,9 +1,11 @@
-package com.detail.app.mydetail.model;
+package com.detail.app.mydetail;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.detail.app.mydetail.model.Surgery;
 
 
 
