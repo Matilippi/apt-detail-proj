@@ -47,8 +47,37 @@
     	<artifactId>log4j-core</artifactId>
     	<version>2.13.0</version>
 	</dependency>
+	<dependency>
+		<groupId>org.mongodb</groupId>
+		<artifactId>mongo-java-driver</artifactId>
+		<version>3.12.8</version>
+	</dependency>
   </dependencies>
   <build>
+	  <plugins>
+	  	<plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-assembly-plugin</artifactId>
+	        <executions>
+	          <execution>
+	            <phase>package</phase>
+	            <goals>
+	              <goal>single</goal>
+	            </goals>
+	            <configuration>
+	              <descriptorRefs>
+	                <descriptorRef>jar-with-dependencies</descriptorRef>
+	              </descriptorRefs>
+	              <archive>
+	                <manifest>
+	                  <mainClass>com.detail.app.mydetail.SimpleMongoApp</mainClass>
+	                </manifest>
+	              </archive>
+	            </configuration>
+	          </execution>
+	        </executions>
+	      </plugin>
+	      </plugins>
 	  <pluginManagement>
 	  	<plugins>
 		    <plugin>
@@ -140,6 +169,7 @@
   		</plugins>
   	</pluginManagement>
   </build>
+  
   <profiles>
    <profile>
      <id>jacoco</id>
@@ -183,19 +213,60 @@
 			   <plugin>
 				   <groupId>io.fabric8</groupId>
 				   <artifactId>docker-maven-plugin</artifactId>
+				   <version>0.34.1</version>
 				   <configuration>
+					   <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
 					   <images>
 						   <image>
-							   <name>java-detail-java</name>
+							   <name>java-mongo-detail-java</name>
 						   	   <build>
-									<contextDir>${project.basedir}</contextDir>	  
-								   	<args>
-										<jarToCopy>${project.artifactId}-${project.version}.jar</jarToCopy>	   
-									</args>
+									<contextDir>${project.basedir}</contextDir>
 							   </build>
 							   <run>
+								   <network>
+									   <mode>custom</mode>
+									   <name>my-network</name>
+								   </network>
 								   <wait>
 									   <exit>0</exit>
+								   </wait>
+								   <dependsOn>
+									 <container>mongo</container>  
+								   </dependsOn>
+							   </run>
+						   </image>
+						   <image>
+							   <name>mongo:4.4.3</name>
+							   <alias>mongo</alias>
+							   <run>
+								   <network>
+									   <mode>custom</mode>
+									   <name>my-network</name>
+									   <alias>mongodb</alias>
+								   </network>
+								   <ports>
+									   <port>27017:27017</port>
+								   </ports>
+								   <wait>
+									   <http>
+										   <url>http://localhost:27017</url>
+										   <method>GET</method>
+										   <status>200</status>
+									   </http>
+						   			   <time>10000</time>
+								   </wait>
+							   </run>
+						   </image>
+						   <image>
+							   <alias>app</alias>
+							   <external>
+								   <type>compose</type>
+								   <basedir>${project.basedir}</basedir>
+							   </external>
+							   <run>
+								   <wait>
+									   <log>Hello World!</log>
+									   <time>10000</time>
 								   </wait>
 							   </run>
 						   </image>
