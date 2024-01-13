@@ -223,7 +223,7 @@
 			   <plugin>
 				   <groupId>io.fabric8</groupId>
 				   <artifactId>docker-maven-plugin</artifactId>
-				   <version>0.40.2</version>
+				   <version>0.34.0</version>
 				   <configuration>
 					   <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
 					   <images>
