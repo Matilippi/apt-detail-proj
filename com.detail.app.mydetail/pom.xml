@@ -238,7 +238,8 @@
 									   <name>my-network</name>
 								   </network>
 								   <wait>
-									   <exit>0</exit>
+									   <log>Hello world!</log>
+									   <time>10000</time>
 								   </wait>
 								   <dependsOn>
 									 <container>mongo</container>  
