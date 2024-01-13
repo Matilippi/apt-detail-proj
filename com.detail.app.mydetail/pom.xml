@@ -223,7 +223,7 @@
 			   <plugin>
 				   <groupId>io.fabric8</groupId>
 				   <artifactId>docker-maven-plugin</artifactId>
-				   <version>0.34.0</version>
+				   <version>0.34.1</version>
 				   <configuration>
 					   <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
 					   <images>
@@ -239,7 +239,6 @@
 								   </network>
 								   <wait>
 									   <exit>0</exit>
-									   <time>30000</time>
 								   </wait>
 								   <dependsOn>
 									 <container>mongo</container>  
@@ -264,7 +263,7 @@
 										   <method>GET</method>
 										   <status>200</status>
 									   </http>
-						   			   <time>30000</time>
+						   			   <time>10000</time>
 								   </wait>
 							   </run>
 						   </image>
@@ -277,7 +276,6 @@
 							   <run>
 								   <wait>
 									   <exit>0</exit>
-									   <time>30000</time>
 								   </wait>
 							   </run>
 						   </image>
