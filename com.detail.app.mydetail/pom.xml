@@ -61,7 +61,6 @@
 	    <groupId>de.bwaldvogel</groupId>
 	    <artifactId>mongo-java-server</artifactId>
 	    <version>1.39.0</version>
-	    <scope>test</scope>
 	</dependency>
   </dependencies>
   <build>
@@ -224,7 +223,7 @@
 			   <plugin>
 				   <groupId>io.fabric8</groupId>
 				   <artifactId>docker-maven-plugin</artifactId>
-				   <version>0.40.2</version>
+				   <version>0.40.1</version>
 				   <configuration>
 					   <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
 					   <images>
