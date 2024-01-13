@@ -223,7 +223,7 @@
 			   <plugin>
 				   <groupId>io.fabric8</groupId>
 				   <artifactId>docker-maven-plugin</artifactId>
-				   <version>0.34.1</version>
+				   <version>0.43.4</version>
 				   <configuration>
 					   <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
 					   <images>
@@ -238,8 +238,7 @@
 									   <name>my-network</name>
 								   </network>
 								   <wait>
-									   <log>Hello world!</log>
-									   <time>10000</time>
+									   <exit>0</exit>
 								   </wait>
 								   <dependsOn>
 									 <container>mongo</container>  
