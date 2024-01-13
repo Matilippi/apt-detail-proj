@@ -50,7 +50,7 @@
 	<dependency>
 		<groupId>org.mongodb</groupId>
 		<artifactId>mongo-java-driver</artifactId>
-		<version>3.12.8</version>
+		<version>3.12.10</version>
 	</dependency>
 	<dependency>
 		<groupId>ch.qos.logback</groupId>
@@ -60,7 +60,8 @@
 	<dependency>
 	    <groupId>de.bwaldvogel</groupId>
 	    <artifactId>mongo-java-server</artifactId>
-	    <version>1.11.0</version>
+	    <version>1.39.0</version>
+	    <scope>test</scope>
 	</dependency>
   </dependencies>
   <build>
@@ -223,7 +224,7 @@
 			   <plugin>
 				   <groupId>io.fabric8</groupId>
 				   <artifactId>docker-maven-plugin</artifactId>
-				   <version>0.34.1</version>
+				   <version>0.40.2</version>
 				   <configuration>
 					   <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
 					   <images>
