@@ -16,6 +16,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <junit.version>4.13</junit.version>
+    <testcontainers.version>1.15.1</testcontainers.version>
   </properties>
 
   <dependencies>
@@ -62,6 +63,18 @@
 	    <artifactId>mongo-java-server</artifactId>
 	    <version>1.39.0</version>
 	</dependency>
+	 <dependency>
+      	<groupId>org.testcontainers</groupId>
+      	<artifactId>testcontainers</artifactId>
+      	<version>${testcontainers.version}</version>
+      	<scope>test</scope>
+    </dependency>
+    <dependency>
+      	<groupId>org.testcontainers</groupId>
+      	<artifactId>mongodb</artifactId>
+      	<version>${testcontainers.version}</version>
+      	<scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
 	  <plugins>
@@ -176,6 +189,76 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/it/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-failsafe-plugin</artifactId>
+		        <version>2.22.1</version>
+		        <configuration>
+		          <systemPropertyVariables>
+		            <mongo.port>${mongo.mapped.port}</mongo.port>
+		          </systemPropertyVariables>
+		        </configuration>
+		        <executions>
+		          <execution>
+		            <goals>
+		              <goal>integration-test</goal>
+		              <goal>verify</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		      </plugin>
+		      <plugin>
+		        <groupId>io.fabric8</groupId>
+		        <artifactId>docker-maven-plugin</artifactId>
+		        <version>0.40.2</version>
+		        <configuration>
+		          <images>
+		            <image>
+		              <name>mongo:4.4.3</name>
+		              <run>
+		                <ports>
+		                  <port>mongo.mapped.port:27017</port>
+		                </ports>
+		              </run>
+		            </image>
+		          </images>
+		        </configuration>
+		        <executions>
+		          <execution>
+		            <id>docker-start</id>
+		            <phase>pre-integration-test</phase>
+		            <goals>
+		              <goal>start</goal>
+		            </goals>
+		          </execution>
+		          <execution>
+		            <id>docker-stop</id>
+		            <phase>post-integration-test</phase>
+		            <goals>
+		              <goal>stop</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		      </plugin>
   		</plugins>
   	</pluginManagement>
   </build>
@@ -217,92 +300,21 @@
      </build>
    </profile>
    <profile>
-	   <id>docker</id>
-	   <build>
-		   <plugins>
-			   <plugin>
-				   <groupId>io.fabric8</groupId>
-				   <artifactId>docker-maven-plugin</artifactId>
-				   <version>0.40.1</version>
-				   <configuration>
-					   <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
-					   <images>
-						   <image>
-							   <name>java-mongo-detail-java</name>
-						   	   <build>
-									<contextDir>${project.basedir}</contextDir>
-							   </build>
-							   <run>
-								   <network>
-									   <mode>custom</mode>
-									   <name>my-network</name>
-								   </network>
-								   <wait>
-									   <exit>0</exit>
-								   </wait>
-								   <dependsOn>
-									 <container>mongo</container>  
-								   </dependsOn>
-							   </run>
-						   </image>
-						   <image>
-							   <name>mongo:4.4.3</name>
-							   <alias>mongo</alias>
-							   <run>
-								   <network>
-									   <mode>custom</mode>
-									   <name>my-network</name>
-									   <alias>mongodb</alias>
-								   </network>
-								   <ports>
-									   <port>27017:27017</port>
-								   </ports>
-								   <wait>
-									   <http>
-										   <url>http://localhost:27017</url>
-										   <method>GET</method>
-										   <status>200</status>
-									   </http>
-						   			   <time>10000</time>
-								   </wait>
-							   </run>
-						   </image>
-						   <image>
-							   <alias>app</alias>
-							   <external>
-								   <type>compose</type>
-								   <basedir>${project.basedir}</basedir>
-							   </external>
-							   <run>
-								   <wait>
-									   <exit>0</exit>
-								   </wait>
-							   </run>
-						   </image>
-					   </images>
-				   </configuration>
-				   <executions>
-				   		<execution>
-					       <id>docker-build-image</id>
-					       <phase>package</phase>
-					       <goals>
-					         <goal>build</goal>
-					       </goals>
-					     </execution>
-					     <execution>
-					       <id>docker-verify</id>
-					       <phase>verify</phase>
-					       <goals>
-					         <goal>start</goal>
-					         <goal>stop</goal>
-					       </goals>
-						</execution>
-				   </executions>
-			   </plugin>
-		   </plugins>
-	   </build>
-   </profile>
-   
+      <id>skip-testcontainers</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>**/*Testcontainers*.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
   <reporting>
     <plugins>
