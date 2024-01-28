@@ -78,6 +78,6 @@ public class Surgery
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + patientName + "]";
+		return "Surgery [id=" + id + ", name=" + patientName + "]";
 	}
 }
