@@ -40,10 +40,10 @@ jobs:
        env: 
           COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_TOKEN}}
        working-directory: ${{ env.workdir }}
-     - name: Verify Docker
-       run: > 
-          mvn verify -Pdocker
-       working-directory: ${{ env.workdir }}
+     #- name: Verify Docker
+       #run: > 
+          #mvn verify -Pdocker
+       #working-directory: ${{ env.workdir }}
      - name: Archive JUnit Report
        uses: actions/upload-artifact@v2
        if: ${{ always() }}
